@@ -6,7 +6,7 @@ import { Container, CircularProgress, TextField, Button, FormControl, InputLabel
 import ThumbnailCard from "@/components/ThumbnailCard";
 import { OneApi } from "@/types/interface";
 
-const rootApi: string = 'http://localhost:8080/externalapi/photos';
+const rootApi: string = 'https://assessment-01.vercel.app/externalapi/photos';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
