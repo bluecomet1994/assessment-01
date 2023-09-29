@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     domains: ['via.placeholder.com'],
   },
+  env: {
+    ROOT_API: process.env.ROOT_API
+  }
 }
 
 module.exports = nextConfig

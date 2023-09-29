@@ -6,8 +6,6 @@ import { Container, CircularProgress, TextField, Button, FormControl, InputLabel
 import ThumbnailCard from "@/components/ThumbnailCard";
 import { OneApi } from "@/types/interface";
 
-const rootApi: string = 'https://assessment-01.vercel.app/externalapi/photos';
-
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isGenerate, setIsGenerate] = useState(false);
@@ -27,7 +25,7 @@ export default function Home() {
   function getData(limit?: number, offset?: number) {
     setIsLoading(true);
 
-    axios.get(`${rootApi}?title=${title}&album.title=${albumTitle}&album.user.email=${userEmail}&limit=${limit ? limit : 25}&offset=${offset ? offset : 0}`)
+    axios.get(`${process.env.ROOT_API}?title=${title}&album.title=${albumTitle}&album.user.email=${userEmail}&limit=${limit ? limit : 25}&offset=${offset ? offset : 0}`)
       .then(response => {
         setIsLoading(false);
         setData(response.data);
@@ -40,7 +38,7 @@ export default function Home() {
 
     setIsGenerate(true);
 
-    axios.post('https://assessment-01-j389.vercel.app/api/interaction', { url: data.url })
+    axios.post('/api/interaction', { url: data.url })
       .then(response => {
         setIsGenerate(false);
         setGeneratedText(response.data[0].generated_text);
