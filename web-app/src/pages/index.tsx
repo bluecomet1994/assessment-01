@@ -40,7 +40,7 @@ export default function Home() {
 
     setIsGenerate(true);
 
-    axios.post('http://localhost:3000/api/interaction', { url: data.url })
+    axios.post('https://assessment-01-j389.vercel.app/api/interaction', { url: data.url })
       .then(response => {
         setIsGenerate(false);
         setGeneratedText(response.data[0].generated_text);
