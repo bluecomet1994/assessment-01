@@ -1,0 +1,21 @@
+{
+  "name": "assessment",
+  "version": "1.0.0",
+  "description": "Software developer skill assessment",
+  "scripts": {
+    "install": "cd web-app && npm install && cd ../external-api && pnpm install",
+    "api": "cd external-api && pnpm start",
+    "web": "cd web-app && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluecomet1994/assessment-01.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bluecomet1994/assessment-01/issues"
+  },
+  "homepage": "https://github.com/bluecomet1994/assessment-01#readme"
+}
