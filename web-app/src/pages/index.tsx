@@ -1,7 +1,20 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, CircularProgress, TextField, Button, FormControl, InputLabel, Select, MenuItem, Dialog, DialogTitle, DialogContent } from "@mui/material";
+import {
+  Container,
+  CircularProgress,
+  TextField,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Typography
+} from "@mui/material";
 
 import ThumbnailCard from "@/components/ThumbnailCard";
 import { OneApi } from "@/types/interface";
@@ -9,6 +22,8 @@ import { OneApi } from "@/types/interface";
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isGenerate, setIsGenerate] = useState(false);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
   const [data, setData] = useState<OneApi[]>([]);
   const [selectedData, setSelectedData] = useState<OneApi>();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -28,7 +43,9 @@ export default function Home() {
     axios.get(`${process.env.ROOT_API}?title=${title}&album.title=${albumTitle}&album.user.email=${userEmail}&limit=${limit ? limit : 25}&offset=${offset ? offset : 0}`)
       .then(response => {
         setIsLoading(false);
-        setData(response.data);
+        setPage(response.data.page);
+        setTotal(response.data.total);
+        setData(response.data.result);
       });
   }
 
@@ -108,7 +125,7 @@ export default function Home() {
         </Button>
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center items-center">
         <Button
           variant="contained"
           className="px-8 py-3 mx-4 bg-orange-500"
@@ -139,6 +156,10 @@ export default function Home() {
             <MenuItem value={50}>50</MenuItem>
           </Select>
         </FormControl>
+
+        <Typography className="w-48">
+          {page} / {total}
+        </Typography>
       </div>
 
       <Container maxWidth="xl" className="mt-8 mb-20">

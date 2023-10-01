@@ -70,6 +70,12 @@ export interface OneApi {
   }
 }
 
+export interface ResponseData {
+  page: number;
+  total: number;
+  result: OneApi[];
+}
+
 export interface ThumbnailCardProp {
   data: OneApi;
   setter: any;

@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = require("dotenv");
 const express = require("express");
-const bodyParser = require("body-parser");
 const logger = require("morgan");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 const routes_1 = require("./routes");
 dotenv.config();

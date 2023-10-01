@@ -64,7 +64,11 @@ class PhotoController {
             else {
                 oneApiData = oneApiData.slice(defaultOffset, limit ? limit : defaultLimit);
             }
-            res.status(200).json(oneApiData);
+            res.status(200).json({
+                page: (offset ? offset : defaultOffset) / (limit ? limit : defaultLimit) + 1,
+                total: photoResponse.data.length,
+                result: oneApiData
+            });
         }
         catch (error) {
             res.status(500).json({ message: error.message });
