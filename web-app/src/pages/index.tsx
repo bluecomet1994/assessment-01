@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import {
   Container,
@@ -17,12 +17,12 @@ import {
 } from "@mui/material";
 
 import ThumbnailCard from "@/components/ThumbnailCard";
-import { OneApi } from "@/types/interface";
+import {OneApi} from "@/types/interface";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isGenerate, setIsGenerate] = useState(false);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState([0, 0]);
   const [total, setTotal] = useState(0);
   const [data, setData] = useState<OneApi[]>([]);
   const [selectedData, setSelectedData] = useState<OneApi>();
@@ -55,7 +55,7 @@ export default function Home() {
 
     setIsGenerate(true);
 
-    axios.post('/api/interaction', { url: data.url })
+    axios.post('/api/interaction', {url: data.url})
       .then(response => {
         setIsGenerate(false);
         setGeneratedText(response.data[0].generated_text);
@@ -73,8 +73,10 @@ export default function Home() {
   }
 
   function moveToNext() {
-    setOffset(prev => prev + limit);
-    getData(limit, offset + limit);
+    if (offset + limit < total) {
+      setOffset(prev => prev + limit);
+      getData(limit, offset + limit);
+    }
   }
 
   function handleLimit(value: number) {
@@ -99,21 +101,21 @@ export default function Home() {
           variant="outlined"
           className='mx-2'
           value={title}
-          onChange={({ target: { value } }) => setTitle(value)}
+          onChange={({target: {value}}) => setTitle(value)}
         />
         <TextField
           label="Album Title"
           variant="outlined"
           className='mx-2'
           value={albumTitle}
-          onChange={({ target: { value } }) => setAlbumTitle(value)}
+          onChange={({target: {value}}) => setAlbumTitle(value)}
         />
         <TextField
           label="User Email"
           variant="outlined"
           className='mx-2'
           value={userEmail}
-          onChange={({ target: { value } }) => setUserEmail(value)}
+          onChange={({target: {value}}) => setUserEmail(value)}
         />
 
         <Button
@@ -148,7 +150,7 @@ export default function Home() {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={limit}
-            onChange={({ target: { value } }) => handleLimit(Number(value))}
+            onChange={({target: {value}}) => handleLimit(Number(value))}
           >
             <MenuItem value={5}>5</MenuItem>
             <MenuItem value={10}>10</MenuItem>
@@ -157,8 +159,8 @@ export default function Home() {
           </Select>
         </FormControl>
 
-        <Typography className="w-48">
-          {page} / {total}
+        <Typography className="w-64">
+          {page[0]} - {page[1]} / {total}
         </Typography>
       </div>
 
@@ -166,13 +168,13 @@ export default function Home() {
         {
           isLoading ? (
             <div className="flex justify-center">
-              <CircularProgress />
+              <CircularProgress/>
             </div>
           ) : (
             <div className="flex flex-wrap w-full">
               {
                 data.map((item: OneApi) => (
-                  <ThumbnailCard key={item.id} data={item} setter={selectData} />
+                  <ThumbnailCard key={item.id} data={item} setter={selectData}/>
                 ))
               }
             </div>
@@ -184,10 +186,10 @@ export default function Home() {
         <DialogTitle className="text-center">{selectedData?.title}</DialogTitle>
 
         <DialogContent className="flex flex-col">
-          <Image alt="preivew" src={selectedData ? selectedData.url : ''} width={600} height={600} priority />
+          <Image alt="preivew" src={selectedData ? selectedData.url : ''} width={600} height={600} priority/>
 
           <h1 className="font-bold text-center text-xl text-red-500 my-8">
-            {isGenerate ? <CircularProgress /> : generatedText}
+            {isGenerate ? <CircularProgress/> : generatedText}
           </h1>
         </DialogContent>
       </Dialog>

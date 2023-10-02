@@ -58,6 +58,7 @@ class PhotoController {
             if (userEmail) {
                 oneApiData = oneApiData.filter((data) => data.album.user.email === userEmail);
             }
+            const totalPages = oneApiData.length;
             if (offset) {
                 oneApiData = oneApiData.slice(offset, limit ? offset + limit : offset + defaultLimit);
             }
@@ -65,8 +66,8 @@ class PhotoController {
                 oneApiData = oneApiData.slice(defaultOffset, limit ? limit : defaultLimit);
             }
             res.status(200).json({
-                page: (offset ? offset : defaultOffset) / (limit ? limit : defaultLimit) + 1,
-                total: photoResponse.data.length,
+                page: [offset + 1, offset + limit],
+                total: totalPages,
                 result: oneApiData
             });
         }
