@@ -122,6 +122,7 @@ export default function Home() {
           variant="contained"
           className="px-8 py-4 mx-4 bg-blue-500"
           onClick={() => getData(limit, offset)}
+          disabled={isLoading}
         >
           Search
         </Button>
@@ -132,6 +133,7 @@ export default function Home() {
           variant="contained"
           className="px-8 py-3 mx-4 bg-orange-500"
           onClick={moveToPrev}
+          disabled={isLoading}
         >
           Prev
         </Button>
@@ -140,11 +142,12 @@ export default function Home() {
           variant="contained"
           className="px-8 py-3 mx-4 bg-green-500"
           onClick={moveToNext}
+          disabled={isLoading}
         >
           Next
         </Button>
 
-        <FormControl fullWidth className="mx-6">
+        <FormControl fullWidth className="mx-6" disabled={isLoading}>
           <InputLabel id="demo-simple-select-label">Limit</InputLabel>
           <Select
             labelId="demo-simple-select-label"
